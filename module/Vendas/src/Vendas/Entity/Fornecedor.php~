@@ -1,0 +1,60 @@
+<?php
+
+namespace Vendas\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Fornecedor
+ *
+ * @ORM\Table(name="fornecedor")
+ * @ORM\Entity
+ */
+class Fornecedor
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cod_fornecedor", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codFornecedor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cnpj", type="string", length=20, nullable=false)
+     */
+    private $cnpj;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=150, nullable=false)
+     */
+    private $nome;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="telefone", type="string", length=15, nullable=true)
+     */
+    private $telefone;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="st_ativo", type="boolean", nullable=false, options={"default"="1"})
+     */
+    private $stAtivo = '1';
+
+
+}

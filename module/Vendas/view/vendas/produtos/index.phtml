@@ -1,0 +1,143 @@
+<div style="border:solid 1px #f8f8f8;border-radius:10px; padding: 5px;">
+    <button id="mostrar-form" class="btn btn-primary" onclick="$.fn.mostrarFormAdd();" style="display: block;"><span class="glyphicon glyphicon-plus"></span> Adicionar produto</button>
+    <button id="esconder-form" class="btn btn-link" onclick="$.fn.esconderFormAdd($('produtos_form'));" style="display: none;"><span class="glyphicon glyphicon-arrow-left"></span></button>
+    <div id="form-add-container" style="display: none;">
+        <h3>Adicionar Produto no Estoque</h3>
+
+        <!--<form action="/GerenciamentoVendas/gerenciar?acao=adicionar-venda" method="post" class="form-horizontal">-->
+        <?php $this->form->setAttribute('class', 'form-horizontal'); ?>
+        <?php $this->form->setAttribute('action', $this->url('vendas/produtos') . '/salvarajax'); ?>
+        <?php echo $this->form()->openTag($this->form); ?>
+        <input type="hidden" name="id" value="0">
+        <?php echo $this->formRow($form->get('codProduto')); ?>
+        <!--<input type="hidden" name="entity" value="produto">-->
+
+        <div class="form-group">
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('nome')); ?>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('codCategoria')); ?>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('codFornecedor')); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-4">
+            <?php echo $this->formLabel($form->get('dtFabricacao')); ?>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+            <?php echo $this->formElement($form->get('dtFabricacao')); ?>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formLabel($form->get('dtValidade')); ?>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                    <?php echo $this->formElement($form->get('dtValidade')); ?>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('numDiasAlertarVencimento')); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-8">
+                <?php echo $this->formRow($form->get('descricao')); ?>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-lg-4">
+                <?php echo $this->formLabel($form->get('precoVenda')); ?>
+                <div class="input-group">
+                    <div class="input-group-addon"><strong>R$</strong></span></div>
+                    <?php echo $this->formElement($form->get('precoVenda')); ?>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formLabel($form->get('precoFabrica')); ?>
+                <div class="input-group">
+                    <div class="input-group-addon"><strong>R$</strong></span></div>
+                    <?php echo $this->formElement($form->get('precoFabrica')); ?>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('quantidade')); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <?php /*
+              <div class="col-lg-4">
+              <?php echo $this->formLabel($form->get('desconto')); ?>
+              <div class="input-group">
+              <div class="input-group-addon"><strong>%</strong></div>
+              <?php echo $this->formElement($form->get('desconto')); ?>
+              </div>
+              </div>
+             */ ?>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-lg-2">
+                <?php echo $this->formRow($form->get('btCancelar')); ?>
+                <?php echo $this->formRow($form->get('btAdicionar')); ?>
+            </div>
+        </div>
+
+
+        <span class="glyphicon glyphicon-info-sign" style="color:#296294;"></span><span class="text-info"> - Os campos com asterisco (*) são obrigatórios.</span>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+    <!--</form>-->
+    <hr>
+    <h3 id="listagem">Listagem de Produtos do Estoque</h3>
+    <p><span class="glyphicon glyphicon-info-sign" style="color:#296294;"></span><span class="text-info"> - A data de valide na a cor <span style="color:#ffd400">laranja</span>, indica que o produto está próximo de vencer.</span></p>
+    <p><span class="glyphicon glyphicon-info-sign" style="color:#296294;"></span><span class="text-info"> - A data de valide na a cor <span style="color:#ffd400">laranja</span> precedido de um <span class="glyphicon glyphicon-exclamation-sign" style="color:#ffd400"></span>, indica que o produto vence hoje ou amanhã.</span></p>
+    <p><span class="glyphicon glyphicon-info-sign" style="color:#296294;"></span><span class="text-info"> - A data de valide na a cor <span style="color:#ff0000">vermelho</span> precedido de um <span class="glyphicon glyphicon-remove" style="color:#ff0000"></span>, indica que o produto está vencido.</span></p>
+    <br>
+    <!--
+    <table class="table table-striped table-condensed" id="produtos-table">
+        <thead>
+            <tr>                
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Fornecedor</th>
+                <th>Preço Venda</th>
+                <!--<th>Preço Fábrica</th>--
+                <!--<th>Dt Fabricação</th>--
+                <th>Dt Validade</th>
+                <th>Quantidade</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    -->
+    <?php
+    $gridsgp = [
+        'url' => $this->url('vendas/produtos', ['action' => 'getdatagrid']),
+        'id' => 'grid-estoque-produtos',
+        'title' => 'Lista de Produtos',
+        'columns' => [[
+            ['field' => 'Produto_codProduto', 'title' => 'Código', 'sortable' => true],
+            ['field' => 'Produto_nome', 'title' => 'Nome', 'width' => '30%', 'sortable' => true, 'order' => 'asc'],
+            ['field' => 'Categoria_nome', 'title' => 'Categoria', 'width' => '18%', 'sortable' => true],
+            ['field' => 'Fornecedor_nome', 'title' => 'Fornecedor', 'width' => '15%', 'sortable' => true],
+            ['field' => 'Produto_precoVenda', 'title' => 'Preço Venda', 'width' => '8%', 'sortable' => true],
+            ['field' => 'Produto_dtValidade', 'title' => 'Dt Validade', 'width' => '8%', 'sortable' => true],
+            ['field' => 'Produto_quantidade', 'title' => 'Quantidade', 'width' => '7%', 'align' => 'center', 'sortable' => true],
+            ['field' => 'acao', 'title' => '', 'width' => '10%'],
+            ]],
+        'enableFilter' => [
+                ['field' => 'acao', 'type' => 'label'],
+        ],
+        'showFooter' => true
+    ];
+    echo $this->gridEasyuiHelper($gridsgp, $this);
+    ?>
+
+
+</div>

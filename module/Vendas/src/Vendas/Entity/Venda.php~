@@ -1,0 +1,85 @@
+<?php
+
+namespace Vendas\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Venda
+ *
+ * @ORM\Table(name="venda", indexes={@ORM\Index(name="fk_venda_cliente1_idx", columns={"cod_cliente"})})
+ * @ORM\Entity
+ */
+class Venda
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cod_venda", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codVenda;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dt_venda", type="datetime", nullable=true)
+     */
+    private $dtVenda;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dt_pagamento", type="datetime", nullable=true)
+     */
+    private $dtPagamento;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="st_pago", type="boolean", nullable=false)
+     */
+    private $stPago = '0';
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="st_ativo", type="boolean", nullable=false, options={"default"="1"})
+     */
+    private $stAtivo = '1';
+
+    /**
+     * @var \Vendas\Entity\Cliente
+     *
+     * @ORM\ManyToOne(targetEntity="Vendas\Entity\Cliente")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cod_cliente", referencedColumnName="cod_cliente")
+     * })
+     */
+    private $codCliente;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Vendas\Entity\Produto", inversedBy="vendaCodVenda")
+     * @ORM\JoinTable(name="venda_has_produto",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="venda_cod_venda", referencedColumnName="cod_venda")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="produto_cod_produto", referencedColumnName="cod_produto")
+     *   }
+     * )
+     */
+    private $produtoCodProduto;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->produtoCodProduto = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

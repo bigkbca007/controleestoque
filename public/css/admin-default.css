@@ -1,0 +1,49 @@
+.sgc_border-grid{
+    border: 1px solid #ccc
+}
+.sgc_color-grid{
+    color: #214F81
+}
+.sgc-espacamento{
+    padding: 5px;
+    margin-bottom: 15px;
+}
+.sgc-heading{
+    background-color: #E5EFFF !important;
+    padding: none !important;
+    padding: 1px 5px;border-bottom:  1px solid #95B8E7
+}
+.sgc-font-heading{
+    font-size: 13px; color: #0e2d5f
+}  
+
+.sgc_combobox{
+    text-align: right;
+    width: 35%
+}
+.sgc_div{
+    float:left;text-align: right
+}
+
+.sgc_combobox_height{
+    height: 27px
+}
+.sgc_textbox_height{
+    height: 40px !important;
+}
+
+.sgc-grid-espacamento{
+    padding: 3px
+}
+.sgc-table{
+    width: 100%
+}
+.sgc-instancia-div-form{
+    text-align: center;font-size: 12px
+}
+.sgc-instancia-top-td{
+    text-align: right;width: 40%;font-weight: bold
+}
+.sgc-instancia-secund-td{
+    text-align: left; padding: 5px;
+}

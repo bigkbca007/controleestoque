@@ -1,0 +1,39 @@
+<?php
+
+namespace Vendas\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Categoria
+ *
+ * @ORM\Table(name="categoria")
+ * @ORM\Entity
+ */
+class Categoria
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cod_categoria", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codCategoria;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=45, nullable=false)
+     */
+    private $nome;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="st_ativo", type="boolean", nullable=false, options={"default"="1"})
+     */
+    private $stAtivo = '1';
+
+
+}

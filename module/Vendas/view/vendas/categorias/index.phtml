@@ -1,0 +1,47 @@
+<div style="border:solid 1px #f8f8f8;border-radius:10px; padding: 5px;">
+    <button id="mostrar-form" class="btn btn-primary" onclick="$.fn.mostrarFormAdd();" style="display: block;"><span class="glyphicon glyphicon-plus"></span> Adicionar categoria</button>
+    <button id="esconder-form" class="btn btn-link" onclick="$.fn.esconderFormAdd($('categorias_form'));" style="display: none;"><span class="glyphicon glyphicon-arrow-left"></span></button>
+    <div id="form-add-container" style="display: none;">
+        <h3>Adicionar Categoria</h3>
+
+        <?php $this->form->setAttribute('class', 'form-horizontal'); ?>
+        <?php $this->form->setAttribute('action', $this->url('vendas/categorias') . '/salvarajax'); ?>
+        <?php echo $this->form()->openTag($this->form); ?>
+        <input type="hidden" name="id" value="0">
+        <?php echo $this->formRow($form->get('codCategoria')); ?>
+        <!--<input type="hidden" name="entity" value="produto">-->
+
+        <div class="form-group">
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('nome')); ?>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-lg-2">
+                <?php echo $this->formRow($form->get('btCancelar')); ?>
+                <?php echo $this->formRow($form->get('btAdicionar')); ?>
+            </div>
+        </div>
+
+        <span class="glyphicon glyphicon-info-sign" style="color:#296294;"></span><span class="text-info"> - Os campos com asterisco (*) são obrigatórios.</span>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+    <!--Informa se o combo deve ser atualizado para mostra compos adicionados depois de carregar a página-->
+    <input type="hidden" id="atualizar_combo" value="0">
+
+    <!--</form>-->
+    <hr>
+    <h3 id="listagem">Listagem de Categoria</h3>
+    <table class="table table-striped table-condensed" id="categorias-table">
+        <thead>
+            <tr>                
+                <th>#</th>
+                <th>Nome</th>
+                <!-- <th></th> -->
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>

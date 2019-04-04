@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/src/Vendas/Controller/ProdutosController.php</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/src/Vendas/Form/VendaForm.php</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/public/js/vendas/vendas.js</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/public/js/formscrud.js</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/src/Vendas/Repository/VendaRepository.php</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/src/Vendas/Service/AbstractService.php</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/src/Vendas/Repository/ProdutoRepository.php</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/view/easyuigrid/grid-default.phtml</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Application/view/layout/layout.phtml</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/src/Vendas/Controller/VendasController.php</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/config/module.config.php</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/view/vendas/vendas/index.phtml</file>
+            <file>file:/E:/xampp/htdocs/ProjetoSistemaEstoque/controleestoque/module/Vendas/src/Vendas/Service/ControleEstoqueService.php</file>
+        </group>
+    </open-files>
+</project-private>

@@ -1,0 +1,104 @@
+
+<?php
+$columns = $grid['columns'][0];
+$onLoadSuccess = isset($grid['onLoadSuccess']) ? $grid['onLoadSuccess'] : '';
+
+$sufixGrid = ucfirst(str_replace(['-', '/', '.'], '', $grid['id']));
+
+//Filter
+$enableFilter = "";
+if (isset($grid['enableFilter'])) {
+    $enableFilter .= "
+        if(!filterEnabled{$sufixGrid}){
+            filterEnabled{$sufixGrid} = true;
+            var dg = $('#{$grid['id']}').datagrid('enableFilter'," . json_encode($grid['enableFilter']) . ");;
+        }
+    ";
+}
+
+//Subgrid
+$onExpandRow = "";
+if (isset($grid['onExpandRow'])) {
+    $sg = json_encode($grid['onExpandRow']);
+    $subGrid = preg_replace(array('/^({)/', '/(})$/'), '', $sg);
+
+    $onExpandRow .= "
+        var dg = $('#{$grid['id']}').datagrid({
+            view: detailview,
+            detailFormatter: function (index, row) {
+                return '<div style=\"padding:2px\"><table id=\"ddv-' + index + '\" width=\"50%\"></table></div>';
+            },
+            onExpandRow: function (index, row) {
+                $('#ddv-' + index).datagrid({
+                    $subGrid,
+                    onResize:function(){
+                        dg.datagrid('fixDetailRowHeight',index);
+                    },
+                    onLoadSuccess:function(){
+                        setTimeout(function(){
+                            dg.datagrid('fixDetailRowHeight',index);
+                        },0);
+                    }
+                });
+            },
+        });
+    ";
+}
+
+$script = <<<GRID_SCRIPT
+    filterEnabled{$sufixGrid} = false;
+    function loadSuccessFunction{$sufixGrid}(){
+        $enableFilter
+        $onLoadSuccess
+    }
+    jQuery(document).ready(function(){
+        $onExpandRow
+    });
+GRID_SCRIPT;
+$view->headScript()->appendScript($script, 'text/javascript', array());
+
+unset($grid['columns']);
+unset($grid['enableFilter']);
+?>
+
+<!-- Tabela do grid -->
+<table id="<?php echo $grid['id'] ?>" class="easyui-datagrid ddg" title="<?php echo $grid['title'] ?>" width="100%"  
+        data-options="       
+            <?php
+            // Setando configuraçoes do grid
+            foreach ($grid as $p => $g):
+                // Campos definidos como array não são inseridos.
+                if (!is_array($g)) {
+                    echo "$p:'$g', ";
+                } elseif('pageList' == $p){
+                    echo "$p:".json_encode($g).", ";
+                }
+            endforeach;
+            ?>
+            onLoadSuccess: loadSuccessFunction<?php echo $sufixGrid ?>,
+            <?php if(isset($grid['toolbar']) && $grid['toolbar']): ?>
+                toolbar:toolbar<?php echo $sufixGrid; ?>
+            <?php endif;?>
+       ">
+    <thead>
+        <tr>
+            <?php foreach ($columns as $c): ?>
+                <?php $confs = json_encode($c); ?>
+                <?php $field_confs = str_replace(['{', '}'], '', $confs); ?>
+                <th data-options='<?php echo $field_confs; ?>' ></th>
+            <?php endforeach; ?>
+        </tr>
+    </thead>
+</table>
+
+<!-- Toolbar -->
+<?php if (isset($grid['toolbar']) && $grid['toolbar']): ?>
+    <div id="toolbar<?php echo $sufixGrid; ?>" <?php
+    $toolbarAttrs = isset($grid['toolbar']['attributes']) ? $grid['toolbar']['attributes'] : array();
+    foreach ($toolbarAttrs as $attr => $val) {
+        echo "$attr='{$val}' ";
+    }
+    ?>>
+         <?php echo isset($grid['toolbar']['content']) ? $grid['toolbar']['content'] : ''; ?>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,81 @@
+<?php
+
+namespace Vendas\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cliente
+ *
+ * @ORM\Table(name="cliente")
+ * @ORM\Entity
+ */
+class Cliente
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cod_cliente", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codCliente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=200, nullable=false)
+     */
+    private $nome;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="telefone", type="string", length=15, nullable=true)
+     */
+    private $telefone;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dt_cadastro", type="datetime", nullable=false)
+     */
+    private $dtCadastro;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="cpf", type="string", length=15, nullable=true)
+     */
+    private $cpf;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="rg", type="string", length=12, nullable=true)
+     */
+    private $rg;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="sexo", type="string", length=1, nullable=true)
+     */
+    private $sexo;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="st_ativo", type="boolean", nullable=false, options={"default"="1"})
+     */
+    private $stAtivo = '1';
+
+
+}

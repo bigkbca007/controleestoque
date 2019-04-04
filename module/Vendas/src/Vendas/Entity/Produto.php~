@@ -1,0 +1,129 @@
+<?php
+
+namespace Vendas\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Produto
+ *
+ * @ORM\Table(name="produto", indexes={@ORM\Index(name="fk_produto_fornecedor1_idx", columns={"cod_fornecedor"}), @ORM\Index(name="fk_produto_categoria1_idx", columns={"cod_categoria"})})
+ * @ORM\Entity
+ */
+class Produto
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cod_produto", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codProduto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=100, nullable=false)
+     */
+    private $nome;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="descricao", type="text", length=65535, nullable=true)
+     */
+    private $descricao;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="preco_venda", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $precoVenda;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="preco_fabrica", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $precoFabrica;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dt_fabricacao", type="date", nullable=true)
+     */
+    private $dtFabricacao;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dt_validade", type="date", nullable=true)
+     */
+    private $dtValidade;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="quantidade", type="integer", nullable=false)
+     */
+    private $quantidade;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="desconto", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $desconto;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="st_ativo", type="boolean", nullable=false)
+     */
+    private $stAtivo;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="num_dias_alertar_vencimento", type="integer", nullable=true)
+     */
+    private $numDiasAlertarVencimento;
+
+    /**
+     * @var \Vendas\Entity\Categoria
+     *
+     * @ORM\ManyToOne(targetEntity="Vendas\Entity\Categoria")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cod_categoria", referencedColumnName="cod_categoria")
+     * })
+     */
+    private $codCategoria;
+
+    /**
+     * @var \Vendas\Entity\Fornecedor
+     *
+     * @ORM\ManyToOne(targetEntity="Vendas\Entity\Fornecedor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cod_fornecedor", referencedColumnName="cod_fornecedor")
+     * })
+     */
+    private $codFornecedor;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Vendas\Entity\Venda", mappedBy="produtoCodProduto")
+     */
+    private $vendaCodVenda;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->vendaCodVenda = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

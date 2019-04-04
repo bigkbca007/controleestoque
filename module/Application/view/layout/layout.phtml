@@ -1,0 +1,154 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Gerenciamento cosméticos')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php
+        echo $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath('js/datetimepicker-master/build/jquery.datetimepicker.min.css'))
+                ->prependStylesheet($this->basePath('css/jquery.dataTables.css'))
+                ->prependStylesheet($this->basePath('css/style.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                ->prependStylesheet($this->basePath('easyui/themes/icon.css'))
+                ->prependStylesheet($this->basePath('easyui/themes/default/easyui.css'))
+        ?>
+
+        <!-- Scripts -->
+        <?php
+        $fileTable = 'vendas';
+        if ($this->Url() == $this->url('vendas')) {
+            $fileTable = 'vendas';
+        }
+        if ($this->Url() == $this->url('vendas') . '/produtos') {
+            $fileTable = 'produtos';
+        }
+        if ($this->Url() == $this->url('vendas') . '/categorias') {
+            $fileTable = 'categorias';
+        }
+        if ($this->Url() == $this->url('vendas') . '/clientes') {
+            $fileTable = 'clientes';
+        }
+        if ($this->Url() == $this->url('vendas') . '/fornecedores') {
+            $fileTable = 'fornecedores';
+        }
+        echo $this->headScript()
+                ->prependFile($this->basePath('js/jquery.mask.js'))
+                ->prependFile($this->basePath('js/datagrid-detailview.js'))
+                ->prependFile($this->basePath('js/datetimepicker-master/build/jquery.datetimepicker.full.min.js'))
+                //->prependFile($this->basePath('blockui/jquery.blockUI.js'))
+                ->prependFile($this->basePath('js/vendas/'.$fileTable.'.js'))
+                ->prependFile($this->basePath('js/formscrud.js'))
+                ->prependFile($this->basePath('js/default.js'))
+                ->prependFile($this->basePath('js/jquery.dataTables.js'))
+                ->prependFile($this->basePath('easyui/datagrid-filter/datagrid-filter.js'))
+                ->prependFile($this->basePath('easyui/jquery.easyui.min.js'))
+                ->prependFile($this->basePath('js/bootstrap.min.js'))
+                ->prependFile($this->basePath('js/jquery.min.js'))
+        ;
+        ?>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="barra-topo">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!--<a class="navbar-brand" href="<?php // echo $this->url('home')     ?>"><img src="<?php // echo $this->basePath('img/zf2-logo.png')     ?>" alt="Zend Framework 2"/>&nbsp;<?php //echo $this->translate('Skeleton Application')    ?></a>-->
+                </div>
+                <!--                <div class="collapse navbar-collapse">
+                                    <ul class="nav navbar-nav">
+                                        <li class="active"><a href="<?php //echo $this->url('home')    ?>"><?php //echo $this->translate('Home')    ?></a></li>
+                                    </ul>
+                                </div>/.nav-collapse -->
+                <div class="container-fluid">
+
+                    <div class="collapse navbar-collapse">
+
+                        <ul class="nav navbar-nav">
+                            <li class="<?php echo $this->Url() == $this->url('vendas') ? 'active' : ''; ?>"><a href="<?php echo $this->url('vendas'); ?>">Vendas</a></li>
+                            <li class="<?php echo $this->Url() == $this->url('vendas') . '/produtos' ? 'active' : ''; ?>"><a href="<?php echo $this->url('vendas') . '/produtos'; ?>">Produtos</a></li>
+                            <li class="<?php echo $this->Url() == $this->url('vendas') . '/categorias' ? 'active' : ''; ?>"><a href="<?php echo $this->url('vendas') . '/categorias'; ?>">Categorias</a></li>
+                            <li class="<?php echo $this->Url() == $this->url('vendas') . '/clientes' ? 'active' : ''; ?>"><a href="<?php echo $this->url('vendas') . '/clientes'; ?>">Clientes</a></li>
+                            <li class="<?php echo $this->Url() == $this->url('vendas') . '/fornecedores' ? 'active' : ''; ?>"><a href="<?php echo $this->url('vendas') . '/fornecedores'; ?>">Fornecedores</a></li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <div id="table_filter" class="row">
+                                    <div class="col-md-10">
+                                        <input type="search" id="busca" class="form-control" placeholder="Buscar produto" aria-controls="vendas-table">
+                                    </div>
+                                </div>
+                                <!--
+                                    <ul class="dropdown-menu" id="column_search" data-column_search="1">  
+                                        <li><a href="#" data-column_index="1">Nome do produto</a></li>    
+                                        <li><a href="#" data-column_index="2">Nome do cliente</a></li>
+                                        <li><a href="#" data-column_index="3">Data para pagamento</a></li>
+                                        <li><a href="#" data-column_index="4">Data venda</a></li>
+                                        <li><a href="#" data-column_index="5">Valor</a></li>
+                                        <li><a href="#" data-column_index="6">Nome da empresa</a></li>
+                                        <li><a href="#" data-column_index="7">Produtos pagos</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container" style="width:80%;">
+            <?php
+            //echo $this->url('vendas').'/produtos';
+            ?>
+            <?php echo $this->content; ?>
+            <!--            <footer style="position:absolute;bottom:0;">
+                            <hr>
+                            <p>&copy; 2017 - <?php //echo date('Y')    ?> by Ederson Silva. All rights reserved.</p>
+                        </footer>-->
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+
+        <!-- Modal sistema -->
+        <div class="modal fade" id="modal-sistema" tabindex="-1" role="dialog" aria-labelledby="modal-sistema-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modal-sistema-label"></h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modal-btn-cancel" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="modal-btn-ok" class="btn btn-primary">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caixa diálogo de confirmação -->
+        <div id="question" style="display:none;"> 
+            <h1></h1>
+            <hr>
+            <input type="button" id="sim" value="Sim" class="btn" /> 
+            <input type="button" id="nao" value="Não" class="btn" /> 
+        </div> 
+
+    </body>
+</html>

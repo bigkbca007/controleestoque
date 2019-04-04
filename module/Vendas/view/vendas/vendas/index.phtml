@@ -1,0 +1,142 @@
+<!--<script type="text/javascript" src="http://www.jeasyui.com/easyui/datagrid-detailview.js"></script>-->
+<div style="border:solid 1px #f8f8f8; border-radius:10px; padding:5px;">
+    <button id="mostrar-form" class="btn btn-primary" onclick="$.fn.mostrarFormAdd();" style="display: block;"><span class="glyphicon glyphicon-plus"></span> Adicionar venda</button>
+    <button id="esconder-form" class="btn btn-link" onclick="$.fn.esconderFormAdd($('#vendas_form'));" style="display: none;"><span class="glyphicon glyphicon-arrow-left"></span></button>
+    <div id="form-add-container" style="display: none;">
+        <h3>Adicionar Venda</h3>
+        <!--<form action="/GerenciamentoVendas/gerenciar?acao=adicionar-venda" method="post" class="form-horizontal">-->
+        <?php $this->form->setAttribute('class', 'form-horizontal'); ?>
+        <?php $this->form->setAttribute('action', $this->url('vendas') . '/salvarajax'); ?>
+        <?php echo $this->form()->openTag($this->form); ?>
+        <input type="hidden" name="id" value="0">
+        <?php echo $this->formRow($form->get('codVenda')); ?>
+        <!--<input type="hidden" name="entity" value="venda">-->
+
+        <div id="produtos">
+            <div class="form-group" id="produto-1">
+                <div class="col-lg-3 select-autocomplete">
+                    <?php echo $this->formRow($form->get('codProduto-1')); ?>
+                </div>
+                <div class="col-lg-3">
+                    <?php echo $this->formLabel($form->get('precoPago-1')); ?>
+                    <div class="input-group">
+                        <div class="input-group-addon">R$</div>
+                        <?php echo $this->formElement($form->get('precoPago-1')); ?>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <?php echo $this->formRow($form->get('quantidade-1')); ?>
+                </div>
+                <div class="col-lg-2">
+                    <?php echo $this->formLabel($form->get('desconto-1')); ?>
+                    <div class="input-group">
+                        <div class="input-group-addon"><strong>%</strong></div>
+                        <?php echo $this->formElement($form->get('desconto-1')); ?>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="input-group" style="margin-top:20px;">
+                        <button class="btn btn-success" type="button" onclick="$.fn.addProdutoVenda();"><span class="glyphicon glyphicon-plus"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="form-group"></div> -->
+        <hr>
+        <div class="form-group">
+            <div class="col-lg-4">
+                <?php echo $this->formLabel($form->get('dtVenda')); ?>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                    <?php echo $this->formElement($form->get('dtVenda')); ?>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formLabel($form->get('dtPagamento')); ?>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                    <?php echo $this->formElement($form->get('dtPagamento')); ?>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('stPago')); ?>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group select-autocomplete">
+            <div class="col-lg-4">
+                <?php echo $this->formRow($form->get('codCliente')); ?>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-lg-2">
+                <?php echo $this->formRow($form->get('btCancelar')); ?>
+                <?php echo $this->formRow($form->get('btAdicionar')); ?>
+            </div>
+        </div>
+        <span class="glyphicon glyphicon-info-sign" style="color:#296294;"></span><span class="text-info"> - Os campos com asterisco (*) são obrigatórios.</span>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+    <!--</form>-->
+
+    <hr>
+    <h3 id="listagem">Listagem de Vendas</h3>
+    <?php
+    $gridsgp = [
+        'url' => $this->url('vendas/getdatagrid'),
+        'id' => 'grid-estoque-vendas',
+        'title' => 'Lista de Vendas',
+        'columns' => [[
+            ['field' => 'Venda_codVenda', 'title' => 'Código', 'sortable' => true, 'width' => '5%'],
+            ['field' => 'Venda_dtVenda', 'title' => 'Data Venda', 'sortable' => true, 'order' => 'desc', 'width' => '15%'],
+            ['field' => 'Cliente_nome', 'title' => 'Cliente', 'width' => '55%', 'sortable' => true],
+            ['field' => 'Venda_stPago', 'title' => 'Pago', 'sortable' => true, 'width' => '10%', 'align' => 'center'],
+            ['field' => 'acao', 'title' => '', 'width' => '10%', 'align' => 'center'],
+            ]],
+        'enableFilter' => [
+                ['field' => 'acao', 'type' => 'label'],
+        ],
+        'toolbar' => [
+            'content' => '  <div id="tb">
+                                <button class="btn btn-sm ativo bt-toolbar" id="listar-ativos" onclick="mudarListagem(1)"><span class="glyphicon glyphicon-ok text-success"></span> Listar Ativas</button>
+                                <button class="btn btn-sm bt-toolbar" id="listar-inativos" onclick="mudarListagem(0)"><span class="glyphicon glyphicon-remove text-danger"></span> Listar Inativas</button>
+                                <button class="btn btn-sm bt-toolbar" id="listar-todos" onclick="mudarListagem(2)"><span class="glyphicon glyphicon-list text-primary"></span> Listar Todas</button>
+                            </div>'
+            
+        ]
+    ];
+    echo $this->gridEasyuiHelper($gridsgp, $this);
+    ?>
+
+</div>
+
+<!--Modelo clone produto-->
+<div class="form-group hide" id="modelo-clone-produto">
+    <div class="col-lg-3 select-autocomplete">
+        <?php echo $this->formRow($form->get('codProduto-0')); ?>
+    </div>
+    <div class="col-lg-3">
+        <label for="precoPago-0">Preço do Produto*</label>
+        <div class="input-group">
+            <div class="input-group-addon">R$</div>
+            <input type="text" name="precoPago-0" id="precoPago-0" class="form-control dinheiro" required="required" placeholder="Preço do Produto*" value="">
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <label for="quantidade-0">Quantidade*</label>
+        <input type="text" name="quantidade-0" id="quantidade-0" class="form-control" placeholder="Quantidade" value="">
+    </div>
+    <div class="col-lg-2">
+        <label for="desconto-0">Desconto</label>
+        <div class="input-group">
+            <div class="input-group-addon"><strong>%</strong></div>
+            <input type="text" name="desconto-0" id="desconto-0" class="form-control" placeholder="Desconto" title="Desconto aplicado sobro o preço do produto cadastrado." onkeyup="$.fn.aplicarDesconto(this)" value="">
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <div class="input-group" style="margin-top:20px;">
+            <button class="btn btn-success" type="button" onclick="$.fn.addProdutoVenda();"><span class="glyphicon glyphicon-plus"></span></button>
+        </div>
+    </div>
+</div>
