@@ -79,7 +79,7 @@ class VendasController extends AbstractController {
 //    }
 
     /**
-     * 
+     * Método para busca de dados para listagem no grid easyui
      * @return type
      */
     public function getDataGridAction() {
